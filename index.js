@@ -16,6 +16,11 @@ const canvas = document.getElementById('paint');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+//fill transparent background
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+	
 ctx.lineJoin = 'round';
 ctx.lineCap = 'round';
 ctx.strokeStyle = "#3498db";
@@ -153,6 +158,11 @@ function submitButton() {
     temp_canvas.width = canvas.width;
     temp_canvas.height = canvas.height;
     temp_vctx = temp_canvas.getContext('2d');
+	
+	//fill transparent background
+	temp_vctx.fillStyle = "white";
+	temp_vctx.fillRect(0, 0, temp_canvas.width, temp_canvas.height);
+
     temp_vctx.drawImage(canvas, 0, 0, temp_canvas.width, temp_canvas.height);	
     temp_canvas.toBlob(submit, 'image/png', 0.1);
 }
@@ -233,26 +243,27 @@ function init() {
     resizeCanvas();
 	
 	var pk = new Piklor(".color-picker", [
-            "#1abc9c"
+	        "#e74c3c"
+          , "#f39c12"
+          , "#f1c40f"
           , "#2ecc71"
+          , "#1abc9c"
           , "#3498db"
           , "#9b59b6"
           , "#34495e"
+          , "#82eedd"
           , "#16a085"
           , "#27ae60"
           , "#2980b9"
           , "#8e44ad"
           , "#2c3e50"
-          , "#f1c40f"
           , "#e67e22"
-          , "#e74c3c"
-          , "#ecf0f1"
           , "#95a5a6"
-          , "#f39c12"
           , "#d35400"
           , "#c0392b"
           , "#bdc3c7"
           , "#7f8c8d"
+		  , "#ffc0cb"
         ], {
             open: ".color-picker-wrapper .color-icon"
         })
