@@ -31,11 +31,18 @@ attachListeners();
 
 //Mouse Event START
 function onMouseDown(e) {
-	drawing = true; 
+	drawing = true;	
 	previous = {x: mouse.x, y: mouse.y};
 	mouse = oMousePos(canvas, e);
 	points = [];
 	points.push({x: mouse.x, y: mouse.y})
+
+	//draw a point
+	ctx.beginPath();
+    ctx.arc(e.clientX, e.clientY, dotSize/2, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+	//--
 }
 
 function onMouseUp(e) {
@@ -101,16 +108,25 @@ function drawPaths(){
 	
 	//draw all the paths in the paths array
 	pathsry.forEach(path => {
-		ctx.beginPath();
-		ctx.moveTo(path[0].x, path[0].y);  
-		for(let i = 1; i < path.length; i++){
-			ctx.lineTo(path[i].x,path[i].y);
-			ctx.lineWidth = path[i].dotSize;
-			ctx.lineJoin = 'round';
-			ctx.lineCap = 'round';
-			ctx.strokeStyle = path[i].color;
+		if (path.length==1){
+			//draw a point
+			ctx.beginPath();
+			ctx.arc(path[0].x, path[0].y, dotSize/2, 0, Math.PI * 2);
+			ctx.fillStyle = color;
+			ctx.fill();
+			//--
+		}else{
+			ctx.beginPath();
+			ctx.moveTo(path[0].x, path[0].y);  
+			for(let i = 1; i < path.length; i++){
+				ctx.lineTo(path[i].x,path[i].y);
+				ctx.lineWidth = path[i].dotSize;
+				ctx.lineJoin = 'round';
+				ctx.lineCap = 'round';
+				ctx.strokeStyle = path[i].color;
+			}
+			ctx.stroke();
 		}
-		ctx.stroke();
 	})
 }  
 
@@ -172,6 +188,7 @@ function submit(imgBlob) {
 			copyElement.style.display = "block";
 		});
 	});
+	detachListeners();
 }
 
 function getId(){
