@@ -28,6 +28,7 @@ let drawing = false;
 let pathsry = [];
 let points = [];
 let dotSize = 6;
+let dotSizeBefore = 6;
 
 var mouse = {x: 0, y: 0};
 var previous = {x: 0, y: 0};
@@ -206,13 +207,39 @@ function getId(){
 	return now.getSeconds().toString() + now.getMilliseconds().toString();
 }
 
+function setActive(ele){
+	var current = document.getElementsByClassName("active");
+	console.log(current.length);
+	current[0].className = current[0].className.replace(" active", "");
+	ele.className += " active";
+}
 
 function attachListeners() {
     // Drawing buttons
-    document.getElementById('small-dot').onmousedown = () => {dotSize = 3;color=document.getElementById('color').getAttribute('value')};
-    document.getElementById('medium-dot').onmousedown = () => {dotSize = 6;color=document.getElementById('color').getAttribute('value')};
-    document.getElementById('large-dot').onmousedown = () => {dotSize = 10;color=document.getElementById('color').getAttribute('value')};
-	document.getElementById('eraser').onmousedown = () => {dotSize = 30; color = 'white'};
+    document.getElementById('small-dot').onmousedown = (e) => {
+		dotSize = 3;
+		dotSizeBefore = dotSize;
+		color=document.getElementById('color').getAttribute('value');
+		setActive(e.srcElement);
+	};
+    document.getElementById('medium-dot').onmousedown = (e) => {
+		dotSize = 6;
+		dotSizeBefore = dotSize;
+		color=document.getElementById('color').getAttribute('value');
+		setActive(e.srcElement);
+	};
+    document.getElementById('large-dot').onmousedown = (e) => {
+		dotSize = 10;
+		dotSizeBefore = dotSize;
+		color=document.getElementById('color').getAttribute('value');
+		setActive(e.srcElement);
+	};
+	document.getElementById('eraser').onmousedown = (e) => {
+		dotSizeBefore = dotSize; 
+		dotSize = 30; 
+		color = 'white';
+		setActive(e.srcElement);
+	};
 	document.getElementById('undo').onmousedown = Undo;
 	document.getElementById('clear').onmousedown = () => {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -274,6 +301,7 @@ function init() {
         colorIcon.style.backgroundColor = col;
 		colorIcon.setAttribute("value", col);
 		color = col;
+		dotSize = dotSizeBefore;
     });
 	
 }

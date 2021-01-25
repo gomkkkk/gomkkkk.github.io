@@ -16,6 +16,7 @@ html, body {
 }
 
 .tool-bar {
+	width: 100%;
     position: absolute;
     left: 0;
     top: 0;
@@ -38,6 +39,11 @@ html, body {
     height: 45px;
     width: 45px;
 	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.active, .tool-icon:hover{
+	background-color: #add8e6;
+	color: white;
 }
 
 
